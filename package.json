@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for Tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aitorulz1/Tasks-server.git"
+  },
+  "author": "Aitor Arina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aitorulz1/Tasks-server/issues"
+  },
+  "homepage": "https://github.com/aitorulz1/Tasks-server#readme"
+}
