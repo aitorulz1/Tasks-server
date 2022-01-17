@@ -12,9 +12,6 @@ exports.crearTarea = async ( req, res, next ) => {
         return res.status(400).json({errores: errores.array()})
     }
 
-
-
-
     try {
 
         // Extraer el proyecto y ver si existe
@@ -26,7 +23,7 @@ exports.crearTarea = async ( req, res, next ) => {
             return res.status(404).send({msg:'Proyecto no encontrado'})
         }
         
-        // Revisar si el proyecto actual pertenece al usuario autenticado
+        // Revisar si el proyecto actual pertenece al usuario autenicado jwt
         if(existeProyecto.creador.toString() !== req.usuario.id) {
             return res.status(403).json({msg: 'No autorizado'})
         }
@@ -44,19 +41,16 @@ exports.crearTarea = async ( req, res, next ) => {
 
 
     // Obtener todas las tareas de un proyecto
-    exports.obtenerTareas = async (req, res, next) => {
-
-        
+    exports.obtenerTareas = async (req, res, next) => {        
         
         try {
 
             // Extraemos el proyecto para saber de qué proyecto queremos las tareas
-            const { proyecto } = req.query;
-
+            const { proyecto } = req.body;
 
             // Si no existe...
             const existeProyecto = await Proyecto.findById(proyecto);
-            if(! existeProyecto) {
+            if(!existeProyecto) {
                 return res.status(404).send({msg:'Proyecto no encontrado'})
             }
             
@@ -65,7 +59,7 @@ exports.crearTarea = async ( req, res, next ) => {
                 return res.status(403).json({msg: 'No autorizado'})
             }
 
-            // Obtener las tareaspor proyecto
+            // Obtener las tareas por proyecto
             const tareas = await Tarea.find({ proyecto })
             res.json({tareas})
 
@@ -104,26 +98,12 @@ exports.crearTarea = async ( req, res, next ) => {
 
             // Crear nueva tarea
             const nuevaTarea = {};
-
-            // if (nombre) {
-            //     nuevaTarea.nombre = nombre;
-            // }
-
-            // if (estado) {
-            //     nuevaTarea.estado = estado;
-            // }
-
-            
-                nuevaTarea.nombre = nombre;
-                nuevaTarea.estado = estado;
-            
-
+            nuevaTarea.nombre = nombre;
+            nuevaTarea.estado = estado;
 
             // Guardar la tarea
             tarea = await Tarea.findOneAndUpdate({_id : req.params.id }, nuevaTarea, {new: true});
             res.json({tarea});
-
-
 
         } catch (error) {
             console.log(error)

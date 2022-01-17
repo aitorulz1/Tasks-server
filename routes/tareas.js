@@ -12,7 +12,7 @@ router.post('/', auth, [
     ], tareasController.crearTarea
 )
 
-// Obtener las tareas del proyecto
+// Obtener las tareas por proyecto
 router.get('/', auth, tareasController.obtenerTareas)
 
 // Actualizr tareas
